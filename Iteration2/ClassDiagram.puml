@@ -61,10 +61,10 @@ User <--  Underviser
 User <-- Student
 User <-- Adminstration
 
-Kurser "1..*" *-- "1..*" Skema
+Kurser "1..*" <-- "1..*" Skema
 
 Underviser "1..*" <-- "1..*" Kurser
-Student "1..*" <-- "1..*" Kurser
+Student "1..*" o-- "1..*" Kurser
 Adminstration "1..*" <-- "1..*" Kurser
 
 
