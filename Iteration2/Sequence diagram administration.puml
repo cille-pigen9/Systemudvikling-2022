@@ -1,0 +1,47 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Admin
+activate Admin
+Admin -> System : Login
+activate System
+database Database
+activate Database
+System --> Database: Verificer bruger
+alt successful case
+Database --> System: bruger ok
+else some kind of failure
+System -> Admin: Menu
+Database --> System: Invalid bruger
+System -> Admin: Log ud
+end
+
+activate System_teacher
+actor Teacher
+activate Teacher
+System_teacher <- Teacher: Request course schedule
+System_teacher -> Database: Send request to Admin
+Database -> System: Send request to Admin
+System -> Admin: Aprove or decline request
+alt successful case
+Admin --> System : Request aproved
+System --> Database: Request aproved
+Database --> System_teacher: Request aproved
+System_teacher --> Teacher: Show message "Request aproved"
+else some kind of failure
+Admin --> System: Request declined
+System --> Database: Request declined
+Database --> System_teacher: Request declined
+System_teacher --> Teacher: show message "Request declined, try again"
+end
+
+
+
+
+
+
+
+
+@enduml
