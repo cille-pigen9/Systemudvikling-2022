@@ -1,0 +1,71 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Login{
+Bruger: str
+Adgangskode: str
+Authenticate()
+}
+
+class User {
+Navn: str
+Adresse: str
+fødseldag: Date
+Cpr-nummer: int
+Telefon nr: int
+Samtykke til dataindsamling()
+}
+
+class Student {
+Studie-nummer: int
+Uddannelse: str
+Semester/Blok: int
+Se skema/ skema ændringer()
+}
+
+
+
+class Teacher{
+Medarbejder nummer: int
+Kurser: str
+Foreslå skema ændringer()
+}
+
+class Administrationssekretær {
+Medarbejder nummer: int
+Afdeling: str
+Godkend skema ændringer()
+}
+
+class Kurser {
+Kursus navn: str
+Kursus ID:int
+ECTS-point : float
+Skema: Skema
+Kursus ansvarlig: str
+Placering: str
+Fakultet: str
+
+}
+
+class Skema {
+Klasse liste: list
+Dato: date
+opdatere/ændre skema()
+Se skema()
+}
+
+
+Login "1" -- "1" User : Login
+User <--  Teacher
+User <-- Student
+User <-- Administrationssekretær
+
+Kurser "1..*" <-- "1..*" Skema
+
+Teacher "1..*" <-- "1..*" Kurser
+Student "1..*" o-- "1..*" Kurser
+Administrationssekretær "1..*" <-- "1..*" Kurser
+
+
+@enduml
