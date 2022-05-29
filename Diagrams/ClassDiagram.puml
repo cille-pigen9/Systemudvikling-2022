@@ -1,71 +1,82 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-class Login{
-Bruger: str
-Adgangskode: str
-Authenticate()
-}
-
-class User {
-Navn: str
-Adresse: str
-fødseldag: Date
-Cpr-nummer: int
-Telefon nr: int
-Samtykke til dataindsamling()
-}
-
-class Student {
-Studie-nummer: int
-Uddannelse: str
-Semester/Blok: int
-Se skema/ skema ændringer()
-}
-
-
-
-class Teacher{
-Medarbejder nummer: int
-Kurser: str
-Foreslå skema ændringer()
-}
-
-class Administrationssekretær {
-Medarbejder nummer: int
-Afdeling: str
-Godkend skema ændringer()
-}
-
-class Kurser {
-Kursus navn: str
-Kursus ID:int
-ECTS-point : float
-Skema: Skema
-Kursus ansvarlig: str
-Placering: str
-Fakultet: str
+class login{
+bruger: str
+adgangskode: str
+usernameAndPassword()
+verificerUser()
 
 }
 
-class Skema {
-Klasse liste: list
-Dato: date
-opdatere/ændre skema()
-Se skema()
+class user {
+navn: str
+adresse: str
+cpr-nummer: int
+telefonNr: int
+createNewUser()
+checkUsername()
+
+}
+
+class student {
+id: int
+education: str
+faculties: 
+set__firstname()
+set__lastname()
+get__fullname()
+get__schedule()
+
 }
 
 
-Login "1" -- "1" User : Login
-User <--  Teacher
-User <-- Student
-User <-- Administrationssekretær
 
-Kurser "1..*" <-- "1..*" Skema
+class teacher{
+medarbejder nummer: int
+courses: str
+set__scheduleRequest()
+get__schedule()
 
-Teacher "1..*" <-- "1..*" Kurser
-Student "1..*" o-- "1..*" Kurser
-Administrationssekretær "1..*" <-- "1..*" Kurser
+}
+
+class administrationssekretær {
+medarbejder nummer: int
+afdeling: str
+get__fullname()
+get__id()
+set__schedule()
+}
+
+class courses {
+kursus navn: str
+kursus ID:int
+ects-point : float
+skema: skema
+kursus ansvarlig: str
+placering: str
+fakultet: str
+get_courseName()
+set__teacher()
+get__teacher()
+set__studentList()
+get__studentList()
+set__courseDate()
+set__classRoom
+
+}
+
+
+
+login "1" -- "1" user : login
+user <--  teacher
+user <-- student
+user <-- administrationssekretær
+
+
+teacher "1..*" -- "1..*" courses
+student "1..*" -- "1..*" courses
+administrationssekretær "1..*" -- "1..*" courses
 
 
 @enduml

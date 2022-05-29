@@ -7,7 +7,6 @@ skinparam packageStyle rectangle
 actor 1_Teacher
 actor 2_Student
 actor 4_Administrationssekretær
-actor 3_TA
 rectangle Study.net.dk {
 
     1_Teacher --> (Request change of  course)
@@ -18,9 +17,7 @@ rectangle Study.net.dk {
     4_Administrationssekretær---> (Book classroom)
     4_Administrationssekretær ---> (change course)
     4_Administrationssekretær ---> (request teachers availability )
-    3_TA ---> (request change of classroom)
-    3_TA ---> (Access Course Information)
-    3_TA ---> (request schedule)
+
 
 
 }
