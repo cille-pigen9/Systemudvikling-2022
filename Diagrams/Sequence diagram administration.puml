@@ -10,7 +10,7 @@ Administrationssekretær -> System : Login
 activate System
 database Database
 activate Database
-System --> Database: Verificer bruger
+System --> Database: verificerUser()
 alt successful case
 Database --> System: Bruger ok
 System -> Administrationssekretær: Login accepted (main menu)
@@ -21,29 +21,26 @@ end
 end
 
 
-activate System_teacher
+
 actor Teacher
+
+System_teacher <- Teacher: requestCourseSchedule()
 activate Teacher
-System_teacher <- Teacher: Request course schedule
+activate System_teacher
 System_teacher -> Database: Send request to Administrationssekretær
 Database -> System: Send request to Administrationssekretær
-System -> Administrationssekretær: Aprove or decline request
+System -> Administrationssekretær: approveOrDeclineCourseSchedule()
 alt successful case
-Administrationssekretær --> System : Request aproved
-System --> Database: Request aproved
-Database --> System_teacher: Request aproved
-System_teacher --> Teacher: Show message "Request aproved"
+Administrationssekretær --> System : Request approved
+System --> Database: Request approved
+Database --> System_teacher: Request approved
+System_teacher --> Teacher: Show message "Request approved"
 else some kind of failure
 Administrationssekretær --> System: Request declined
 System --> Database: Request declined
 Database --> System_teacher: Request declined
 System_teacher --> Teacher: show message "Request declined, try again"
 end
-
-
-
-
-
 
 
 

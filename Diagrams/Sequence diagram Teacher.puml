@@ -11,7 +11,7 @@ Teacher -> System: Login
 activate System
 database Database
 activate Database
-System ---> Database: Verificer bruger
+System ---> Database: verificerUser()
 alt successful case
 Database --> System: bruger ok
 System -> Teacher: Login accepted (main menu)
@@ -21,15 +21,17 @@ System -> Teacher: Login declined
 end
 end
 opt
-Teacher -> System: Request course schedule
+Teacher -> System: RequestCourseSchedule()
 System -> Administration_system: Send request to administration
+activate Administration_system
 actor Administrationssekretær
 activate Administrationssekretær
 Administration_system -> Administrationssekretær: Approve or decline
 end
 alt successful case
-activate Administration_system
+
 Administrationssekretær --> Administration_system: Answer
+
 Administration_system --> System: Request approved
 System -> Teacher: Show updated course schedule
 else some kind of failure
