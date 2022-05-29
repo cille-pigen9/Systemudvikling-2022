@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor 1_Teacher
+actor 2_Student
+actor 4_Administrationssekretær
+rectangle Study.net.dk {
+
+    1_Teacher --> (Request change of  course)
+    1_Teacher ---> (Access Course Information)
+    1_Teacher ---> (request schedule)
+    2_Student ---> (Access Course Information)
+    2_Student ---> (request schedule)
+    4_Administrationssekretær---> (Book classroom)
+    4_Administrationssekretær ---> (change course)
+    4_Administrationssekretær ---> (request teachers availability )
+
+
+
+}
+@enduml

@@ -1,0 +1,82 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class login{
+bruger: str
+adgangskode: str
+usernameAndPassword()
+verificerUser()
+
+}
+
+class user {
+navn: str
+adresse: str
+cpr-nummer: int
+telefonNr: int
+createNewUser()
+checkUsername()
+
+}
+
+class student {
+id: int
+education: str
+faculties: 
+set__firstname()
+set__lastname()
+get__fullname()
+get__schedule()
+
+}
+
+
+
+class teacher{
+medarbejder nummer: int
+courses: str
+set__scheduleRequest()
+get__schedule()
+
+}
+
+class administrationssekretær {
+medarbejder nummer: int
+afdeling: str
+get__fullname()
+get__id()
+set__schedule()
+}
+
+class courses {
+kursus navn: str
+kursus ID:int
+ects-point : float
+skema: skema
+kursus ansvarlig: str
+placering: str
+fakultet: str
+get_courseName()
+set__teacher()
+get__teacher()
+set__studentList()
+get__studentList()
+set__courseDate()
+set__classRoom
+
+}
+
+
+
+login "1" -- "1" user : login
+user <--  teacher
+user <-- student
+user <-- administrationssekretær
+
+
+teacher "1..*" -- "1..*" courses
+student "1..*" -- "1..*" courses
+administrationssekretær "1..*" -- "1..*" courses
+
+
+@enduml
