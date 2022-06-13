@@ -1,5 +1,3 @@
-from class_address import*
-
 class Teacher():
     def __init__(self, firstname: str, lastname:str, id: str, gender: str, schedule, faculties, courseList: []):
         self.firstname = firstname

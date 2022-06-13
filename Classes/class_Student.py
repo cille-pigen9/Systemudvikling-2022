@@ -1,7 +1,5 @@
-from class_address import*
-
 class Student():
-    def __init__(self, firstname: str, lastname: str, gender: str, id: int, education: str, faculties: str, schedule: str):
+    def __init__(self, firstname: str, lastname: str, gender: str, id: str, education: str, faculties: str, schedule: str):
         self.firstname = firstname
         self.lastname = lastname
         self.gender = gender
@@ -11,43 +9,44 @@ class Student():
         self.schedule = schedule
 
 
-    def __set__firstname__(self, newFirstname):
+    def set_firstname(self, newFirstname):
         """ændre fornavn"""
         self.firstname = newFirstname
 
-    def __set__lastname__(self, newLastname):
+    def set_lastname(self, newLastname):
         """ændre efternavn"""
         self.lastname = newLastname
 
-    def __get__fullname(self):
+
+    def get_fullname(self):
         """print fullname"""
         print(self.firstname + " " + self.lastname)
 
-    def __get__gender__(self):
+    def get_gender(self):
         """print køn"""
         print(self.gender)
 
-    def __get__id__(self):
+    def get_id(self):
         """print id"""
         print(self.id)
 
-    def __get__education__(self):
+    def get_education(self):
         """print uddannelsesnavn"""
         print(self.education)
 
-    def __set__faculties__(self, newFaculty):
+    def set_faculties(self, newFaculty):
         """ændre fakultet"""
         self.faculties = newFaculty
 
-    def __get__faculties__(self):
+    def get_faculties(self):
         """print fakultet"""
         print(self.faculties)
 
-    def __set__schedule__(self, newSchedule):
+    def set_schedule(self, newSchedule):
         """ændre skemaet"""
         self.schedule = newSchedule
 
-    def __get__schedule__(self):
+    def get_schedule(self):
         """print skema"""
         print(self.schedule)
 
