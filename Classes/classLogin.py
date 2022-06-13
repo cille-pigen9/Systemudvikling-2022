@@ -1,7 +1,7 @@
 
 class login:
     def __init__(self):
-        self.user = loginUser()
+        #self.user = loginUser()
 
     def usernameAndPassword(self):
         username = input("username: ")
