@@ -4,8 +4,8 @@ class testCourses(unittest.TestCase):
 
     newCourse = courses("systemudvikling", "5100", "Hugo", "Cecilie", "29/5-2022", "401")
 
-    print(newCourse.__get__courseName__())
+    print(newCourse.get_courseName())
 
-    newCourse.__set__courseDate__("26/6-2022")
-    print(newCourse.__get__courseDate__())
+    newCourse.set_courseDate("26/6-2022")
+    print(newCourse.get_courseDate())
 

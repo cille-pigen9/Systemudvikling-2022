@@ -5,10 +5,8 @@ class course:
     def __init__(self):
         self.course = []
 
-    def append_courses(self, course = courses):
-        self.course.append(course)
+    def append_courses(self, courses = courses):
+        self.course.append(courses)
 
-        def get_courses(self):
-            print(self.course)
-
-
+    def get_course(self):
+        return self.course
