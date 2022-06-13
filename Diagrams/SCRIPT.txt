@@ -1,0 +1,185 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema studynet
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema studynet
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `studynet` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `studynet` ;
+
+-- -----------------------------------------------------
+-- Table `studynet`.`Administrationssekretær`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `studynet`.`Administrationssekretær` (
+  `idAdministrationssekretær` INT NOT NULL AUTO_INCREMENT,
+  `medarbejderNummer` INT NULL DEFAULT NULL,
+  `Fakultet` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`idAdministrationssekretær`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `studynet`.`Teacher`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `studynet`.`Teacher` (
+  `idTeacher` INT NOT NULL,
+  `medarbejderNummer` INT NOT NULL,
+  `kursus` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idTeacher`),
+  INDEX `fk_idx` (`kursus` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `studynet`.`kurser`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `studynet`.`kurser` (
+  `idkurser` INT NOT NULL AUTO_INCREMENT,
+  `kursusnavn` VARCHAR(45) NOT NULL,
+  `kursusId` INT NULL DEFAULT NULL,
+  `ECTSpoint` FLOAT NULL DEFAULT NULL,
+  `skema` VARCHAR(45) NULL DEFAULT NULL,
+  `kursusAnsvarlig` VARCHAR(45) NULL DEFAULT NULL,
+  `placering` VARCHAR(45) NULL DEFAULT NULL,
+  `fakultet` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`idkurser`),
+  UNIQUE INDEX `kursusnavn_UNIQUE` (`kursusnavn` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `studynet`.`student`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `studynet`.`student` (
+  `idstudent` INT NOT NULL,
+  `navn` VARCHAR(45) NOT NULL,
+  `alder` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`idstudent`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `studynet`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `studynet`.`user` (
+  `iduser` INT NOT NULL AUTO_INCREMENT,
+  `userName` VARCHAR(255) NULL DEFAULT NULL,
+  `userPassword` VARCHAR(255) NULL DEFAULT NULL,
+  `adresse` VARCHAR(255) NULL DEFAULT NULL,
+  `navn` VARCHAR(45) NOT NULL,
+  `cprNummer` INT NOT NULL,
+  `telefonNr` INT NULL DEFAULT NULL,
+  `idStudent` INT NULL DEFAULT NULL,
+  `idTeacher` INT NULL DEFAULT NULL,
+  `idAdministrationssekretær` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`iduser`),
+  INDEX `idstudent_idx` (`idStudent` ASC) VISIBLE,
+  INDEX `idteacher_idx` (`idTeacher` ASC) VISIBLE,
+  INDEX `idaministrationssekretær_idx` (`idAdministrationssekretær` ASC) VISIBLE,
+  CONSTRAINT `idaministrationssekretær`
+    FOREIGN KEY (`idAdministrationssekretær`)
+    REFERENCES `studynet`.`Administrationssekretær` (`idAdministrationssekretær`),
+  CONSTRAINT `idstudent`
+    FOREIGN KEY (`idStudent`)
+    REFERENCES `studynet`.`student` (`idstudent`),
+  CONSTRAINT `idteacher`
+    FOREIGN KEY (`idTeacher`)
+    REFERENCES `studynet`.`Teacher` (`idTeacher`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `studynet`.`student_has_kurser`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `studynet`.`student_has_kurser` (
+  `student_idstudent` INT NOT NULL,
+  `kurser_idkurser` INT NOT NULL,
+  PRIMARY KEY (`student_idstudent`, `kurser_idkurser`),
+  INDEX `fk_student_has_kurser_kurser1_idx` (`kurser_idkurser` ASC) VISIBLE,
+  INDEX `fk_student_has_kurser_student1_idx` (`student_idstudent` ASC) VISIBLE,
+  CONSTRAINT `fk_student_has_kurser_student1`
+    FOREIGN KEY (`student_idstudent`)
+    REFERENCES `studynet`.`student` (`idstudent`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_student_has_kurser_kurser1`
+    FOREIGN KEY (`kurser_idkurser`)
+    REFERENCES `studynet`.`kurser` (`idkurser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `studynet`.`Teacher_has_kurser`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `studynet`.`Teacher_has_kurser` (
+  `Teacher_idTeacher` INT NOT NULL,
+  `kurser_idkurser` INT NOT NULL,
+  PRIMARY KEY (`Teacher_idTeacher`, `kurser_idkurser`),
+  INDEX `fk_Teacher_has_kurser_kurser1_idx` (`kurser_idkurser` ASC) VISIBLE,
+  INDEX `fk_Teacher_has_kurser_Teacher1_idx` (`Teacher_idTeacher` ASC) VISIBLE,
+  CONSTRAINT `fk_Teacher_has_kurser_Teacher1`
+    FOREIGN KEY (`Teacher_idTeacher`)
+    REFERENCES `studynet`.`Teacher` (`idTeacher`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Teacher_has_kurser_kurser1`
+    FOREIGN KEY (`kurser_idkurser`)
+    REFERENCES `studynet`.`kurser` (`idkurser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `studynet`.`Administrationssekretær_has_kurser`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `studynet`.`Administrationssekretær_has_kurser` (
+  `Administrationssekretær_idAdministrationssekretær` INT NOT NULL,
+  `kurser_idkurser` INT NOT NULL,
+  PRIMARY KEY (`Administrationssekretær_idAdministrationssekretær`, `kurser_idkurser`),
+  INDEX `fk_Administrationssekretær_has_kurser_kurser1_idx` (`kurser_idkurser` ASC) VISIBLE,
+  INDEX `fk_Administrationssekretær_has_kurser_Administrationssekre_idx` (`Administrationssekretær_idAdministrationssekretær` ASC) VISIBLE,
+  CONSTRAINT `fk_Administrationssekretær_has_kurser_Administrationssekret1`
+    FOREIGN KEY (`Administrationssekretær_idAdministrationssekretær`)
+    REFERENCES `studynet`.`Administrationssekretær` (`idAdministrationssekretær`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Administrationssekretær_has_kurser_kurser1`
+    FOREIGN KEY (`kurser_idkurser`)
+    REFERENCES `studynet`.`kurser` (`idkurser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
