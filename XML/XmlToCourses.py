@@ -19,23 +19,23 @@ class XmlToCourses:
 
         for courses in root.getchildren():
             students: [Student] = []
-            for studerende in courses.studerende.getchildren():
-                fornavn = studerende.fornavn.text
+            for studentList in courses.studerende.getchildren():
+                fornavn = studentList.fornavn.text
                 print(fornavn)
-                efternavn = studerende.efternavn.text
+                efternavn = studentList.efternavn.text
                 print(efternavn)
-                koen = studerende.koen.text
+                koen = studentList.koen.text
                 print(koen)
-                id = studerende.id.text
+                id = studentList.id.text
                 print(id)
-                uddannelse = studerende.uddannelse.text
+                uddannelse = studentList.uddannelse.text
                 print(uddannelse)
-                fakultet = studerende.fakultet.text
+                fakultet = studentList.fakultet.text
                 print(fakultet)
-                skema = studerende.skema.text
+                skema = studentList.skema.text
                 print(skema)
                 student = Student(fornavn, efternavn, koen, id, uddannelse, fakultet, skema)
                 students.append(student)
-            course_obj = Classes.class_Courses.courses(courses.kursusnavn, courses.kursusid, courses.lærer, students, courses.dato, courses.klassevarelse)
+            course_obj = courses(courses.kursusnavn, courses.kursusid, courses.lærer, students, courses.dato, courses.klassevarelse)
             courseList.append_courses(course_obj)
         return courseList
